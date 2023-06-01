@@ -10,14 +10,15 @@ url = [
 ]
 # 페이지에서의 URL 호출(URL 주소에서 해당되는 부분의 주소가 호출된다.)
 def UrlList():
-    urlList=[]
+    urlList = []
     for val in url:
         html = urlopen(val)
         bsObject = BeautifulSoup(html, "html.parser")
         for link in bsObject.find_all('a',{'class':'news_tit'}):
-            urlList.append(link.get('href'))    
-    print(urlList)           
+            urlList.append(link.get('href'))      
+    print(urlList)      
     return urlList
+
 # def UrlList():
 #     urlList=[]
 #     for val in url:
@@ -47,10 +48,11 @@ def UrlList():
 
 # raw = requests.get("https://search.naver.com/search.naver?where=news&sm=tab_jum&query=U20", headers = {"User-Agent" : "Mozilla/5.0"})
 
-# print(raw)
+# # print(raw)
 
 # html  = BeautifulSoup(raw.text,"html.parser")
-# print(html.title)
+# # print(html.title)
+# print(html)
 
 # container = html.select("ul.list_news >li")
 # print(container)
