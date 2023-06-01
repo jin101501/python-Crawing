@@ -27,6 +27,7 @@ def UrlList():
             urlList.append(link.get('href'))    
     #print(urlList)           
     return urlList
+
 def UrlText():
     urlList = UrlList()
     textList = []
