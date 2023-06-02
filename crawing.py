@@ -3,7 +3,8 @@
 from urllib.request import urlopen #urllib.request 모듈은 URL 이나 HTTP를 여는 데 도움이 되는 함수와 클래스를 정의한다. urlopen은 string이나 Request 객체인 URL을 열어준다.
 from bs4 import BeautifulSoup # 웹 페이지의 정보를 추출하기 위한  beautifulsoup4 모듈
 import re
-
+from kiwipiepy import Kiwi
+from collections import Counter
 url = [
     "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=36&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=1",
     "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=54&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=11"
@@ -24,7 +25,7 @@ def UrlList():
     return urlList
 
 # UrlList()
-# 
+# 페이지 텍스트 추출하기
 def UrlText():
     urlList = UrlList()
     textList = []
@@ -41,7 +42,35 @@ def UrlText():
     print(textList)
     return textList
 
-UrlText()
+def VocaList(n):    
+    textList =  UrlText()
+    # NNG 일반 명사
+    # NNP 고유 명사
+    # VV  동사
+    # VA  형용사
+    # XR  어근
+    # SL  알파벳(A-Z a-z)
+    주요품사 = ['NNG', 'NNP', 'VV', 'VA', 'XR', 'SL']
+    용언품사 = ['VV', 'VA']
+    counter = Counter()
+    kiwi = Kiwi()
+    dictionary = {}
+    for val in textList:
+        try:            
+            result = kiwi.tokenize(val)
+            for token in result:
+                if token.tag in 주요품사:
+                    counter.update([(token.form,token.tag)])                      
+        except:
+            print("Change Error",val)
+    
+    for(형태소, 품사), 개수 in counter.most_common(n):
+        if 품사 in 용언품사:
+            형태소 += "다"
+        # print(f"{형태소},{개수}")
+        dictionary[형태소] = 개수
+    VocaList()
+# UrlText()
 # raw = requests.get("https://search.naver.com/search.naver?where=news&sm=tab_jum&query=U20", headers = {"User-Agent" : "Mozilla/5.0"})
 
 # # print(raw)
