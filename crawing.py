@@ -98,7 +98,7 @@ def VocaList(n):
     plt.savefig(os.path.join(PATH,file_name)  )
     print(file_name,' 생성 완료')
     
-VocaList(4)
+VocaList(10)
 # raw = requests.get("https://search.naver.com/search.naver?where=news&sm=tab_jum&query=U20", headers = {"User-Agent" : "Mozilla/5.0"})
 
 # # print(raw)
