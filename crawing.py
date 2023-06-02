@@ -11,6 +11,8 @@ import numpy as np
 from PIL import Image
 from datetime import datetime
 import os
+import schedule
+import time
 url = [
     "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=36&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=1",
     "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=54&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=11"
@@ -99,6 +101,15 @@ def VocaList(n):
     print(file_name,' 생성 완료')
     
 VocaList(10)
+schedule.every().hour.do(VocaList,n=100)
+# schedule.every(10).seconds.do() 10초마다 실행
+# schedule.every(1).minutes.do() 1분마다 실행
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+
+
 # raw = requests.get("https://search.naver.com/search.naver?where=news&sm=tab_jum&query=U20", headers = {"User-Agent" : "Mozilla/5.0"})
 
 # # print(raw)
