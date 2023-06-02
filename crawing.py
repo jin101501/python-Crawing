@@ -15,6 +15,8 @@ url = [
     "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=36&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=1",
     "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=54&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=11"
 ]
+PATH = os.getcwd()
+cand_mask=np.array(Image.open(os.path.join(PATH,'image\cloud.png')))
 
 # html = urlopen("https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=36&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=1")
 # bsObject = BeautifulSoup(html, "html.parser")
@@ -78,14 +80,6 @@ def VocaList(n):
         dictionary[형태소] = 개수
  
 # VocaList(4)
-
-PATH = os.getcwd()
-cand_mask=np.array(Image.open(os.path.join(PATH,'image\cloud.png')))
-
-# 형태소 분석
-def VocaList(n):    
-    # 이전소스
-    
     wordcloud = WordCloud(
         font_path = 'malgun.ttf', # 한글 글씨체 설정
         background_color='white', # 배경색은 흰색으로 
