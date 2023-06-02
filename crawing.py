@@ -5,6 +5,12 @@ from bs4 import BeautifulSoup # 웹 페이지의 정보를 추출하기 위한  
 import re
 from kiwipiepy import Kiwi
 from collections import Counter
+from wordcloud import WordCloud 
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+from datetime import datetime
+import os
 url = [
     "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=36&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=1",
     "https://search.naver.com/search.naver?where=news&sm=tab_pge&query=%EA%B0%9C%EB%B0%9C%EC%9E%90&sort=0&photo=0&field=0&pd=0&ds=&de=&cluster_rank=54&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so:r,p:all,a:all&start=11"
@@ -42,6 +48,7 @@ def UrlText():
     print(textList)
     return textList
 
+# UrlText()
 def VocaList(n):    
     textList =  UrlText()
     # NNG 일반 명사
@@ -69,8 +76,35 @@ def VocaList(n):
             형태소 += "다"
         # print(f"{형태소},{개수}")
         dictionary[형태소] = 개수
-    VocaList()
-# UrlText()
+ 
+# VocaList(4)
+
+PATH = os.getcwd()
+cand_mask=np.array(Image.open(os.path.join(PATH,'image\cloud.png')))
+
+# 형태소 분석
+def VocaList(n):    
+    # 이전소스
+    
+    wordcloud = WordCloud(
+        font_path = 'malgun.ttf', # 한글 글씨체 설정
+        background_color='white', # 배경색은 흰색으로 
+        colormap='Blues', # 글씨색은 빨간색으로
+        mask=cand_mask, # 워드클라우드 모양 설정
+    ).generate_from_frequencies(dictionary)
+    
+    # 파일이름 설정
+    now = datetime.now()    
+    file_name = "cloud\word_cloud_" + now.strftime("%Y-%m-%d");
+      
+    #사이즈 설정 및 출력
+    plt.figure(figsize=(10,10))
+    plt.imshow(wordcloud,interpolation='bilinear')
+    plt.axis('off') # 차트로 나오지 않게
+    plt.savefig(os.path.join(PATH,file_name)  )
+    print(file_name,' 생성 완료')
+    
+VocaList(4)
 # raw = requests.get("https://search.naver.com/search.naver?where=news&sm=tab_jum&query=U20", headers = {"User-Agent" : "Mozilla/5.0"})
 
 # # print(raw)
